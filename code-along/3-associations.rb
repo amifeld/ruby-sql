@@ -9,9 +9,22 @@ Contact.destroy_all
 # **************************
 
 # - Insert and read contact data for companies in the database
-
+apple = Company.find_by({"name" => "Apple"})
 # 1. insert new rows in the contacts table with relationship to a company
+new_contact = Contact.new
+new_contact ["first_name"] = "Alfred"
+new_contact ["last_name"] = "Pennyworth"
+new_contact ["email"] = "butler@darkknight.com"
+new_contact ["company_id"] = apple["id"]
+new_contact.save
+
+# rails runner data.rb
 
 # 2. How many contacts work at Apple?
-
+apple_contacts = Contact.where({"company_id" => apple["id"]})
+puts "Apple contacts: #{apple_contacts.count}"
 # 3. What is the full name of each contact who works at Apple?
+
+for contact in apple_contacts
+    puts "#{contact["first_name"]} #{contact["last_name"]}"
+end
